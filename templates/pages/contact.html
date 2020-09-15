@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} contact {% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-image: url(/static/image/backg24.jpg);
+        background-size: cover;
+    }
+</style>
+
+<h1 style="text-align: center;">🏥 Consultation en Ligne 🏥</h1>
+<hr><br>
+<br>
+<div class="card w-75 text-center" style="font-size: large; margin-top: 30px; margin-left: 150px; background-color:#D3D3D3;">
+    <div class="card-body">
+        <h5 class="card-title">Concept</h5>
+        <p class="card-text">Afin de faire respecter les mesures de confinement et éviter le risque de contamination,
+            nous avons mis à votre disposition une consultation sous forme de formulaire, effectués par des
+            médecins hautement qualifiés,
+            capable de discerner grâce à un diagnostic préliminaire d'évaluer votre risque de contagion par le covid-19
+            en toute
+            sécurité et d'assurer un accompagnement pour les personnes ayant un risque élevé de contamination.</p>
+        <a href="{% url 'formulaire:formul' %}" class="btn btn-info">Démarrer la Consultation</a>
+    </div>
+</div>
+
+{% endblock %}

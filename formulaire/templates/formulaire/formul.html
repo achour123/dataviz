@@ -1,0 +1,177 @@
+{% extends 'layouts/base.html'  %}
+{% load widget_tweaks %}
+
+{% block title %} formulaire {% endblock %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+{% endblock %}
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+
+{% block content %}
+<div class="container">
+    <h1 style="text-align: center;">Consultation-en-ligne</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Statut Social</legend>
+
+            <label for="nom" class="font-weight-bold">Entrez votre Nom</label>
+            {{form.nom}}
+           
+
+            <label for="prenom" class="font-weight-bold">Entrez votre Prénom</label>
+            {{form.prenom}}
+            
+
+            <label for="email" class="font-weight-bold">Entrez votre mail</label>
+            {{form.email}}
+        
+
+            <label for="civil" class="font-weight-bold">Etat Civil</label>
+            {{form.civil}}
+            
+
+            <label for="localisation" class="font-weight-bold">Dans quel gouvernorat habitez-vous ?</label>
+            {{form.localisation}}
+            
+        </fieldset>
+        <hr>
+        <p class="font-weight-bold">Ces derniers jours, avez-vous eu ou ressenti un de ces symptômes ?</p>
+        <div class="form-group">
+            {{form.symptomes}}
+        </div>
+        <hr>
+        <p class="font-weight-bold">Ces derniers jours, avez-vous eu ou ressenti un de ces symptômes ?</p>
+        <div class="form-group">        
+            {{form.antecedents}}
+        </div>
+        <hr class="my-4">
+        <p class="font-weight-bold">Est-ce que vous avez été en contact, pendant les deux dernières semaines, avec une
+            personne revenant d’un voyage à l'étranger? </p>
+        <div class="form-group">
+            {{form.etranger}}
+        </div>
+        <hr class="my-4">
+        <p class="font-weight-bold">Est-ce que vous avez été en voyage à l'étranger ces deux dernières semaines ? </p>
+        <div class="form-group">
+            {{form.voyage}}
+        </div>
+        <hr class="my-4">
+        <p class="font-weight-bold">Est-ce que vous avez été en contact, pendant les deux dernières semaines, avec une
+            personne atteinte du Coronavirus ? </p>
+        <div class="form-group">
+            {{form.contact}}
+        </div>
+        <hr class="my-4">
+
+        <div class="alert alert-danger " role="alert" style="text-align: center;">🔐 La page que vous consultez est
+            sécurisée 🔐</div>
+
+        <p class="text-center">
+            <button class="btn btn-primary text-center" type="submit">Enregistrer</button>
+        </p>
+    </form>
+
+    <!-- Fin Formulaire -->
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
+
+    <script>
+
+        $("#rien").on("click", function () {
+            if (this.checked) {
+                $("input.group1").prop("checked", false);;
+                $("input.group1").attr("disabled", true);
+            } else {
+                $("input.group1").attr("disabled", false);
+            }
+        });
+
+        $("#sympt").on("click", function () {
+            if (this.checked) {
+                $("input.group2").prop("checked", false);;
+                $("input.group2").attr("disabled", true);
+            } else {
+                $("input.group2").attr("disabled", false);
+            }
+        });
+
+
+        function validateForm() {
+
+            let score = 0;
+
+            if (document.getElementById("fievre").checked) score += 1;
+            if (document.getElementById("respiratoire").checked) score += 1;
+            if (document.getElementById("diarrhe").checked) score += 1;
+            if (document.getElementById("cephalees").checked) score += 1;
+            if (document.getElementById("douleurs").checked) score += 1;
+            if (document.getElementById("odorat").checked) score += 1;
+            if (document.getElementById("appetit").checked) score += 1;
+            if (document.getElementById("fatigue").checked) score += 1;
+
+            if (document.getElementById('etranger').checked) score += 1;
+            if (document.getElementById('voyage').checked) score += 1;
+            if (document.getElementById('contact').checked) score += 1;
+
+            if (document.getElementById("hypertension").checked) score += 0.5;
+            if (document.getElementById("diabete").checked) score += 0.5;
+            if (document.getElementById("maladieRespiratoire").checked) score += 0.5;
+            if (document.getElementById("renale").checked) score += 0.5;
+            if (document.getElementById("immunitaire").checked) score += 0.5;
+            if (document.getElementById("fumeur").checked) score += 0.5;
+
+
+            if (score < 3) {
+                swal({
+                    title: "Vous etes en bonne santé",
+                    text: "Veuillez portez votre masque et utiliser du gel hydroalcoolique",
+                    icon: "success",
+                    button: true,
+                }).then((value) => {
+                    document.forms['reg_form'].submit();
+                });
+            }
+            else if (score < 5) {
+                swal({
+                    title: "Vous etes un facteur de risque",
+                    text: "veuillez respecter l'auto-confinement à domicile",
+                    icon: "warning",
+                    button: "ok",
+                }).then((value) => {
+                    document.forms['reg_form'].submit();
+                });
+            }
+            else {
+                swal({
+                    title: "Appelez 190",
+                    text: "Restez a la maison",
+                    icon: "error",
+                    button: "ok",
+                }).then((value) => {
+                    document.forms['reg_form'].submit();
+                });
+            }
+        }
+
+    </script>
+
+    {% endblock %}

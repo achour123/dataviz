@@ -1,0 +1,122 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Analyse{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+{% endblock %}
+
+{% block content %}
+<h1>Analyse</h1>
+<hr>
+<h2 style="text-align: center;">Les Dernieres Statistiques du {% now "d-m-Y" %} </h2>
+<hr>
+<div class="row">
+    <div class="col">
+        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header">New Confirmed</div>
+            <div class="card-body">
+                <p class="card-text">{{globalSummary.NewConfirmed}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+            <div class="card-header">TotalConfirmed</div>
+            <div class="card-body">
+                <p class="card-text">{{globalSummary.TotalConfirmed}} </p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">NewDeaths</div>
+            <div class="card-body">
+                <p class="card-text">{{globalSummary.NewDeaths}} </p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+            <div class="card-header">TotalDeaths</div>
+            <div class="card-body">
+                <p class="card-text">{{globalSummary.TotalDeaths}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-header">NewRecovered</div>
+            <div class="card-body">
+
+                <p class="card-text">{{globalSummary.NewRecovered}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+            <div class="card-header">TotalRecovered</div>
+            <div class="card-body">
+
+                <p class="card-text">{{globalSummary.TotalRecovered}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+<hr>
+<h2 style="text-align: center;">Les Dernieres Statistiques Mises à Jours</h2>
+<hr>
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+        <thead>
+            <tr>
+                <th>Num</th>
+                <th>Pays</th>
+                <th>Total Confirmed</th>
+                <th>Total Deaths</th>
+                <th>Total Recovered</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in countries %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{c.Country}}</td>
+                <td>{{c.TotalConfirmed}}</td>
+                <td>{{c.TotalDeaths}}</td>
+                <td>{{c.TotalRecovered}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Num</th>
+                <th>Pays</th>
+                <th>Total Confirmed</th>
+                <th>Total Deaths</th>
+                <th>Total Recovered</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
