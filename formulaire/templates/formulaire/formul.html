@@ -16,7 +16,7 @@
 <div class="container">
     <h1 style="text-align: center;">Consultation-en-ligne</h1>
 
-    <form method="POST">
+    <form method="POST" id="reg_form"  onsubmit="event.preventDefault(); validateForm()">
         {% csrf_token %}
         <fieldset>
             <legend>Statut Social</legend>
