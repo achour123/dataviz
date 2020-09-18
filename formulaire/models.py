@@ -1,10 +1,9 @@
 from django.db import models
-
 from multiselectfield import MultiSelectField
-
 # Create your models here.
 
 class Participants (models.Model):
+    
     LOCALISATION_CHOICES= [
         ('Tunis', 'Tunis'),
         ('Ariana', 'Ariana'),

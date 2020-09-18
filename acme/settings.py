@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'formulaire',
     'multiselectfield',
     'widget_tweaks',
+    'chartjs',
 ]
 
 MIDDLEWARE = [

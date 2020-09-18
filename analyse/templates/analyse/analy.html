@@ -1,8 +1,10 @@
 {% extends 'layouts/base.html' %}
+{% load static %}
 {% block title %}Analyse{% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 {% endblock %}
 
@@ -14,7 +16,7 @@
 <div class="row">
     <div class="col">
         <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-            <div class="card-header">New Confirmed</div>
+            <div class="card-header">Nouv Confirmés</div>
             <div class="card-body">
                 <p class="card-text">{{globalSummary.NewConfirmed}}</p>
             </div>
@@ -22,7 +24,7 @@
     </div>
     <div class="col">
         <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-            <div class="card-header">TotalConfirmed</div>
+            <div class="card-header">Total Confirmés</div>
             <div class="card-body">
                 <p class="card-text">{{globalSummary.TotalConfirmed}} </p>
             </div>
@@ -30,7 +32,7 @@
     </div>
     <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-            <div class="card-header">NewDeaths</div>
+            <div class="card-header">Nouveaux Décès</div>
             <div class="card-body">
                 <p class="card-text">{{globalSummary.NewDeaths}} </p>
             </div>
@@ -38,7 +40,7 @@
     </div>
     <div class="col">
         <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-            <div class="card-header">TotalDeaths</div>
+            <div class="card-header">Total Décès</div>
             <div class="card-body">
                 <p class="card-text">{{globalSummary.TotalDeaths}}</p>
             </div>
@@ -46,7 +48,7 @@
     </div>
     <div class="col">
         <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-            <div class="card-header">NewRecovered</div>
+            <div class="card-header">Nouveaux Guéris</div>
             <div class="card-body">
 
                 <p class="card-text">{{globalSummary.NewRecovered}}</p>
@@ -55,7 +57,7 @@
     </div>
     <div class="col">
         <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-            <div class="card-header">TotalRecovered</div>
+            <div class="card-header">Total Guéris</div>
             <div class="card-body">
 
                 <p class="card-text">{{globalSummary.TotalRecovered}}</p>
@@ -83,9 +85,9 @@
             <tr>
                 <th>Num</th>
                 <th>Pays</th>
-                <th>Total Confirmed</th>
-                <th>Total Deaths</th>
-                <th>Total Recovered</th>
+                <th>Total Confirmés</th>
+                <th>Total Décès</th>
+                <th>Total Guéris</th>
             </tr>
         </thead>
         <tbody>
@@ -103,20 +105,198 @@
             <tr>
                 <th>Num</th>
                 <th>Pays</th>
-                <th>Total Confirmed</th>
-                <th>Total Deaths</th>
-                <th>Total Recovered</th>
+                <th>Total Confirmés</th>
+                <th>Total Décès</th>
+                <th>Total Guéris</th>
             </tr>
         </tfoot>
     </table>
 </div>
+<br>
+<br>
+<br>
+<div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+        <div class="col py-3 px-lg-5 border bg-light">
+            <h2 style="text-align: center;">Top 5 des Pays aux Taux de Contamination le Plus élevé à la fin de
+                {% now "d-m-Y" %} </h2>
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="col py-3 px-lg-5 border bg-light">
+            <h2 style="text-align: center;">Top 5 des Pays aux Taux de Décès le Plus élevé à la fin de <br>
+                {% now "d-m-Y" %} </h2>
+            <canvas id="myChartss"></canvas>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+        <div class="col py-3 px-lg-5 border bg-light">
+            <h2 style="text-align: center;">Top 5 des Pays aux Taux de Guérison le Plus élevé à la fin de <br>
+                {% now "d-m-Y" %} </h2>
+            <canvas id="myChart3"></canvas>
+        </div>
+        <div class="col py-3 px-lg-5 border bg-light">
+            <h2 style="text-align: center;">Répartition des proportions des cas de {% now "d-m-Y" %}</h2>
+            <canvas id="myChartPie"></canvas>
+        </div>
+    </div>
+</div>
+
+<div>
+    TopConfirmed: {{l11}}:{{l12}} <br>
+    TopDeaths: {{l01}}:{{l02}} <br>
+    TopRecovered: {{l21}}:{{l22}} <br>
+</div>
+
+<script >
+    console.log(String({{l12}}))
+</script>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{l11}},
+        datasets: [{
+            label: '# de Contamination',
+            data: {{l11}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+var ctx = document.getElementById('myChartss').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple',],
+        datasets: [{
+            label: '# de Décès',
+            data: {{l01}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+var ctx = document.getElementById('myChart3').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple',],
+        datasets: [{
+            label: '# De Guérison',
+            data: {{l21}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255,0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 
 
+var ctx = document.getElementById('myChartPie').getContext('2d');
+var myChartPie = new Chart(ctx,{
+    type:'pie',
+    data:{
+        labels: ['Décès','Guéris', 'Atteint'],
+        datasets:[{
+            data:[{{globalSummary.TotalDeaths}},{{globalSummary.TotalRecovered}},{{globalSummary.TotalConfirmed}}],
+            backgroundColor:[
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    ],
+            borderColor:[
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    ],
+            borderWidth:1
+        }],
+        
+}
+
+})
 
 
-
+</script>
 {% endblock %}
 
 {% block javascripts %}
-
 {% endblock %}
