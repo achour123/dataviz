@@ -25,51 +25,51 @@
             <div class="card-header">Nouv Confirmés</div>
             <div class="card-body">
                 <p class="card-text">{{globalSummary.NewConfirmed}}</p>
-</div>
-</div>
-</div>
-<div class="col">
-    <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-        <div class="card-header">Total Confirmés</div>
-        <div class="card-body">
-            <p class="card-text">{{globalSummary.TotalConfirmed}} </p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col">
-    <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-        <div class="card-header">Nouveaux Décès</div>
-        <div class="card-body">
-            <p class="card-text">{{globalSummary.NewDeaths}} </p>
+    <div class="col">
+        <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+            <div class="card-header">Total Confirmés</div>
+            <div class="card-body">
+                <p class="card-text">{{globalSummary.TotalConfirmed}} </p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col">
-    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-        <div class="card-header">Total Décès</div>
-        <div class="card-body">
-            <p class="card-text">{{globalSummary.TotalDeaths}}</p>
+    <div class="col">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">Nouveaux Décès</div>
+            <div class="card-body">
+                <p class="card-text">{{globalSummary.NewDeaths}} </p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col">
-    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-        <div class="card-header">Nouveaux Guéris</div>
-        <div class="card-body">
+    <div class="col">
+        <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+            <div class="card-header">Total Décès</div>
+            <div class="card-body">
+                <p class="card-text">{{globalSummary.TotalDeaths}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-header">Nouveaux Guéris</div>
+            <div class="card-body">
 
-            <p class="card-text">{{globalSummary.NewRecovered}}</p>
+                <p class="card-text">{{globalSummary.NewRecovered}}</p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col">
-    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-        <div class="card-header">Total Guéris</div>
-        <div class="card-body">
+    <div class="col">
+        <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+            <div class="card-header">Total Guéris</div>
+            <div class="card-body">
 
-            <p class="card-text">{{globalSummary.TotalRecovered}}</p>
+                <p class="card-text">{{globalSummary.TotalRecovered}}</p>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <style>
     .my-custom-scrollbar {
@@ -120,8 +120,9 @@
         </tfoot>
     </table>
 </div>
-<br>
 <hr>
+<br>
+<br>
 <div class="container px-lg-5">
     <div class="row mx-lg-n5">
         <div class="col py-3 px-lg-5 border bg-light">
@@ -136,7 +137,7 @@
         </div>
     </div>
 </div>
-<hr>
+<hr />
 <div class="container px-lg-5">
     <div class="row mx-lg-n5">
         <div class="col py-3 px-lg-5 border bg-light">
@@ -152,140 +153,139 @@
 </div>
 
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: {{ l12 | safe}},
-    datasets: [{
-        label: '# de Contamination',
-        data: {{ l11 | safe}},
-        backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-
-    ],
-        borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-
-    ],
-        borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-    var ctx = document.getElementById('myChartss').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: {{ l02 | safe}},
-    datasets: [{
-        label: '# de Décès',
-        data: {{ l01 | safe}},
-        backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-
-    ],
-        borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-
-    ],
-        borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-    var ctx = document.getElementById('myChart3').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: {{ l22 | safe}},
-    datasets: [{
-        label: '# De Guérison',
-        data: {{ l21 | safe}},
-        backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255,0.2)',
-
-    ],
-        borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-
-    ],
-    
-        borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-
-    var ctx = document.getElementById('myChartPie').getContext('2d');
-    var myChartPie = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Décès', 'Guéris', 'Atteint'],
-            datasets: [{
-                data: [{{ globalSummary.TotalDeaths }}, {{ globalSummary.TotalRecovered }},{{ globalSummary.TotalConfirmed }}],
-    backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-    ],
-        borderColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-        ],
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+        labels: {{l12 | safe}},
+        datasets: [{
+            label: '# de Contamination',
+            data: {{l11 | safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                
+            ],
             borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+var ctx = document.getElementById('myChartss').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+        labels: {{l02 | safe}},
+        datasets: [{
+            label: '# de Décès',
+            data: {{l01 | safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+var ctx = document.getElementById('myChart3').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+        labels: {{l22 | safe}},
+        datasets: [{
+            label: '# De Guérison',
+            data: {{l21 | safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255,0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var ctx = document.getElementById('myChartPie').getContext('2d');
+var myChartPie = new Chart(ctx,{
+    type:'pie',
+    data:{
+        labels: ['Décès','Guéris', 'Atteint'],
+        datasets:[{
+            data:[{{globalSummary.TotalDeaths}},{{globalSummary.TotalRecovered}},{{globalSummary.TotalConfirmed}}],
+            backgroundColor:[
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    ],
+            borderColor:[
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    ],
+            borderWidth:1
         }],
         
 }
@@ -294,53 +294,53 @@
 </script>
 
 <script type="text/javascript">
-    //map chart
-    var countries = {{ countries | safe }};
-    var data = [];
+//map chart
+  var countries = {{ countries | safe }};
+  var data = [];
 
-    for (let key in countries) {
-        data.push([countries[key].CountryCode.toLowerCase(), countries[key].TotalConfirmed])
-    }
+  for (let key in countries) {
+    data.push([countries[key].CountryCode.toLowerCase(), countries[key].TotalConfirmed])
+  }
 
 
-    // Create the chart
-    Highcharts.mapChart('MapContainer', {
-        chart: {
-            map: 'custom/world-palestine'
-        },
+  // Create the chart
+Highcharts.mapChart('MapContainer', {
+    chart: {
+        map: 'custom/world-palestine'
+    },
 
-        title: {
-            text: 'Total cases by country'
-        },
+    title: {
+        text: 'Total cases by country'
+    },
 
-        mapNavigation: {
-            enabled: true,
-            buttonOptions: {
-                verticalAlign: 'bottom'
+    mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+
+    colorAxis: {
+        min: 0,
+        minColor: '#EEEEFF',
+        maxColor: '#c0392b',
+    },
+
+    series: [{
+        data: data,
+        animation: {
+               duration: 1000
+           },
+        name: 'Total cases',
+        states: {
+            hover: {
+                color: '#BADA55'
             }
         },
 
-        colorAxis: {
-            min: 0,
-            minColor: '#EEEEFF',
-            maxColor: '#c0392b',
-        },
 
-        series: [{
-            data: data,
-            animation: {
-                duration: 1000
-            },
-            name: 'Total cases',
-            states: {
-                hover: {
-                    color: '#BADA55'
-                }
-            },
-
-
-        }]
-    });
+    }]
+});
 </script>
 
 {% endblock %}
