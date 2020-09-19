@@ -4,7 +4,13 @@
 {% block stylesheets %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/mapdata/custom/world-palestine.js"></script>
+
 
 {% endblock %}
 
@@ -79,40 +85,6 @@
 <hr>
 <h2 style="text-align: center;">Les Dernieres Statistiques Mises à Jours</h2>
 <hr>
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-bordered table-striped mb-0">
-        <thead>
-            <tr>
-                <th>Num</th>
-                <th>Pays</th>
-                <th>Total Confirmés</th>
-                <th>Total Décès</th>
-                <th>Total Guéris</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for c in countries %}
-            <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{c.Country}}</td>
-                <td>{{c.TotalConfirmed}}</td>
-                <td>{{c.TotalDeaths}}</td>
-                <td>{{c.TotalRecovered}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Num</th>
-                <th>Pays</th>
-                <th>Total Confirmés</th>
-                <th>Total Décès</th>
-                <th>Total Guéris</th>
-            </tr>
-        </tfoot>
-    </table>
-</div>
-<br>
 <br>
 <br>
 <div class="container px-lg-5">
@@ -144,25 +116,25 @@
     </div>
 </div>
 
+
+
 <div>
     TopConfirmed: {{l11}}:{{l12}} <br>
     TopDeaths: {{l01}}:{{l02}} <br>
     TopRecovered: {{l21}}:{{l22}} <br>
 </div>
 
-<script >
-    console.log(String({{l12}}))
-</script>
+<div id="MapContainer"></div>
 
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: {{l11}},
+        labels: {{l11 | safe}},
         datasets: [{
             label: '# de Contamination',
-            data: {{l11}},
+            data: {{l11 | safe}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -200,7 +172,7 @@ var myChart = new Chart(ctx, {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple',],
         datasets: [{
             label: '# de Décès',
-            data: {{l01}},
+            data: {{l01 | safe}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -238,7 +210,7 @@ var myChart = new Chart(ctx, {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple',],
         datasets: [{
             label: '# De Guérison',
-            data: {{l21}},
+            data: {{l21 | safe}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -293,9 +265,58 @@ var myChartPie = new Chart(ctx,{
 }
 
 })
-
-
 </script>
+
+<script type="text/javascript">
+//map chart
+  var countries = {{ countries | safe }};
+  var data = [];
+
+  for (let key in countries) {
+    data.push([countries[key].CountryCode.toLowerCase(), countries[key].TotalConfirmed])
+  }
+
+
+  // Create the chart
+Highcharts.mapChart('MapContainer', {
+    chart: {
+        map: 'custom/world-palestine'
+    },
+
+    title: {
+        text: 'Total cases by country'
+    },
+
+    mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+
+    colorAxis: {
+        min: 0,
+        minColor: '#EEEEFF',
+        maxColor: '#c0392b',
+    },
+
+    series: [{
+        data: data,
+        animation: {
+               duration: 1000
+           },
+        name: 'Total cases',
+        states: {
+            hover: {
+                color: '#BADA55'
+            }
+        },
+
+
+    }]
+});
+</script>
+
 {% endblock %}
 
 {% block javascripts %}
