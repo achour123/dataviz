@@ -151,7 +151,7 @@
 </div>
 
 <script >
-    console.log(String({{l12}}))
+    console.log(String({{ l12 | safe }}))
 </script>
 
 <script>
@@ -159,10 +159,10 @@
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: {{l11}},
+        labels: {{ l11 | safe }},
         datasets: [{
             label: '# de Contamination',
-            data: {{l11}},
+            data: {{ l11 | safe }},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -200,7 +200,7 @@ var myChart = new Chart(ctx, {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple',],
         datasets: [{
             label: '# de Décès',
-            data: {{l01}},
+            data: {{ l01 | safe }},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -238,7 +238,7 @@ var myChart = new Chart(ctx, {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple',],
         datasets: [{
             label: '# De Guérison',
-            data: {{l21}},
+            data: {{ l21 | safe }},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -276,7 +276,7 @@ var myChartPie = new Chart(ctx,{
     data:{
         labels: ['Décès','Guéris', 'Atteint'],
         datasets:[{
-            data:[{{globalSummary.TotalDeaths}},{{globalSummary.TotalRecovered}},{{globalSummary.TotalConfirmed}}],
+            data:[{{globalSummary.TotalDeaths | safe }},{{globalSummary.TotalRecovered | safe }},{{globalSummary.TotalConfirmed | safe}}],
             backgroundColor:[
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
