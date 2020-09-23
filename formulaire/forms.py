@@ -3,10 +3,10 @@ from .models import Participants
 
 class ParticipantsForm(forms.ModelForm):
     class Meta:
-        model = Participants 
-        fields = ['nom','prenom', 'email', 'localisation','civil','symptomes','antecedents','etranger','voyage','contact']
-        
-        
+        model = Participants
+        fields = ['nom','prenom', 'email', 'localisation','civil','symptomes','antecedents','etranger','voyage','contact', 'score']
+
+
         widgets = {
             'nom' : forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Votre Nom','required': True}),
             'prenom' : forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Votre Prenom','required': True}),
@@ -16,6 +16,5 @@ class ParticipantsForm(forms.ModelForm):
             'etranger': forms.Select(attrs={'class': 'form-control','required': True}),
             'voyage' : forms.Select(attrs={'class': 'form-control','required': True}),
             'contact' : forms.Select(attrs={'class': 'form-control','required': True}),
-
+            'score' :  forms.HiddenInput(),
         }
-        
