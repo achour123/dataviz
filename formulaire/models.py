@@ -77,6 +77,7 @@ class Participants (models.Model):
     ]
 
     nom= models.CharField(max_length=20)
+    score= models.CharField(max_length=20, default="")
     prenom= models.CharField(max_length=30)
     email = models.EmailField(max_length=100)
     localisation = models.CharField(max_length=30, choices=LOCALISATION_CHOICES)
