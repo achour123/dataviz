@@ -11,7 +11,6 @@
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/mapdata/custom/world-palestine.js"></script>
 
-
 {% endblock %}
 
 {% block content %}
@@ -77,13 +76,42 @@
         height: 200px;
         overflow: auto;
     }
-
     .table-wrapper-scroll-y {
         display: block;
     }
+
+    h5{
+      color: #c0392b;
+    }
+
+    #marqueecontainer{
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    padding: 2px;
+    padding-left: 4px;
+    }
 </style>
 <hr>
-<div id="MapContainer"></div>
+<div class="row">
+  <div id="MapContainer" class="col-10"></div>
+  <div class="col-2 border bg-light">
+    <h4>Actualités quotidiennes</h4>
+    <div id="marqueecontainer" onMouseover="copyspeed=pausespeed" onMouseout="copyspeed=marqueespeed">
+      <div id="vmarquee" style="position: absolute; width: 98%;">
+        {% for c in countries %}
+        <li>
+          <h5>{{c.Country}}:</h5>
+          <ul>{{c.NewDeaths}} Décès</ul>
+          <ul> {{c.NewRecovered}} Guéris</ul>
+          <ul>{{c.NewConfirmed}} Confirmés</ul>
+        </li>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
 <hr>
 <h2 style="text-align: center;">Les Dernieres Statistiques Mises à Jours</h2>
 <hr>
@@ -167,7 +195,6 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -175,7 +202,6 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                
             ],
             borderWidth: 1
         }]
@@ -205,7 +231,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                
+
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -213,7 +239,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                
+
             ],
             borderWidth: 1
         }]
@@ -243,7 +269,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255,0.2)',
-                
+
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -251,7 +277,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                
+
             ],
             borderWidth: 1
         }]
@@ -287,19 +313,17 @@ var myChartPie = new Chart(ctx,{
                     ],
             borderWidth:1
         }],
-        
 }
 
 })
-</script>
 
-<script type="text/javascript">
 //map chart
   var countries = {{ countries | safe }};
   var data = [];
 
   for (let key in countries) {
     data.push([countries[key].CountryCode.toLowerCase(), countries[key].TotalConfirmed])
+    console.log(countries[key].NewConfirmed);
   }
 
 
@@ -310,7 +334,7 @@ Highcharts.mapChart('MapContainer', {
     },
 
     title: {
-        text: 'Total cases by country'
+        text: 'Total des cas par pays'
     },
 
     mapNavigation: {
@@ -337,10 +361,43 @@ Highcharts.mapChart('MapContainer', {
                 color: '#BADA55'
             }
         },
-
-
     }]
 });
+
+// Daily news scrolling animation
+var delayb4scroll=2000 //Specify initial delay before marquee starts to scroll on page (2000=2 seconds)
+var marqueespeed=2 //Specify marquee scroll speed (larger is faster 1-10)
+var pauseit=1 //Pause marquee onMousever (0=no. 1=yes)?
+var copyspeed=marqueespeed
+var pausespeed=(pauseit==0)? copyspeed: 0
+var actualheight=''
+
+function scrollmarquee(){
+if (parseInt(cross_marquee.style.top)>(actualheight*(-1)+8)) //if scroller hasn't reached the end of its height
+cross_marquee.style.top=parseInt(cross_marquee.style.top)-copyspeed+"px" //move scroller upwards
+else //else, reset to original position
+cross_marquee.style.top=parseInt(marqueeheight)+8+"px"
+}
+
+function initializemarquee(){
+cross_marquee=document.getElementById("vmarquee")
+cross_marquee.style.top=0
+marqueeheight=document.getElementById("marqueecontainer").offsetHeight
+actualheight=cross_marquee.offsetHeight //height of marquee content (much of which is hidden from view)
+if (window.opera || navigator.userAgent.indexOf("Netscape/7")!=-1){ //if Opera or Netscape 7x, add scrollbars to scroll and exit
+cross_marquee.style.height=marqueeheight+"px"
+cross_marquee.style.overflow="scroll"
+return
+}
+setTimeout('lefttime=setInterval("scrollmarquee()",30)', delayb4scroll)
+}
+
+if (window.addEventListener)
+window.addEventListener("load", initializemarquee, false)
+else if (window.attachEvent)
+window.attachEvent("onload", initializemarquee)
+else if (document.getElementById)
+window.onload=initializemarquee
 </script>
 
 {% endblock %}
